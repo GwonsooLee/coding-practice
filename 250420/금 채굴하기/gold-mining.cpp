@@ -47,7 +47,7 @@ int main()
    }
 
    int ans = 0;
-   for (int k = 1; k <= N; ++k) {
+   for (int k = 0; k <= N; ++k) {
       for (int i = 0; i < N; ++i) {
          for (int j = 0; j < N; ++j) {
             ans = max(ans, func(i, j, k));
