@@ -10,34 +10,18 @@ bool invalid(int x, int y) {
 
 int func(int x, int y, int w, int h) {
    int ans = 0;
-   // go right & up
-   for (int i = 1; i <= w; ++i) {
-      x--, y++;
-      if (invalid(x, y)) return 0;
-      ans += A[x][y];
-   }
 
-   // go left & up
-   for (int i = 1; i <= h; ++i) {
-      x--, y--;
-      if (invalid(x,y)) return 0;
-      ans += A[x][y];
+   int dx[4] = {-1,-1,1,1};
+   int dy[4] = {1,-1,-1,1};
+   int moves[4] = {w,h,w,h};
+   for (int d = 0; d < 4; ++d) {
+      for (int q = 0; q < moves[d]; ++q) {
+         x += dx[d], y += dy[d];
+         if (invalid(x,y)) return 0;
+         ans += A[x][y];
+      }
    }
-
-   // go down & left
-   for (int i = 1; i <= w; ++i) {
-      x++, y--;
-      if (invalid(x,y)) return 0;
-      ans += A[x][y];
-   }
-
-   // go down and right;
-   for (int i = 1; i <= h; ++i) {
-      x++, y++;
-      if (invalid(x,y)) return 0;
-      ans += A[x][y];
-   }
-
+   
    return ans;
 }
 
