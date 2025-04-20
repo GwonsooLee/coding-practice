@@ -17,10 +17,10 @@ int main()
 
    int ans = 0;
    for (int i = 0; i < N; ++i) {
-      int cnt = 1;
+      int cnt = 0;
       bool found = false;
-      for (int j = 1; j < N; ++j) {
-         if (A[i][j] == A[i][j-1])cnt++;
+      for (int j = 0; j < N; ++j) {
+         if (j > 0 && A[i][j] == A[i][j-1])cnt++;
          else cnt = 1;
          if (cnt == M) {
             found = true;
@@ -30,10 +30,10 @@ int main()
       if (found)ans++;
    }
    for (int i = 0; i < N; ++i) {
-      int cnt = 1;
+      int cnt = 0;
       bool found = false;
-      for (int j = 1; j < N; ++j) {
-         if (A[j][i] == A[j-1][i])cnt++;
+      for (int j = 0; j < N; ++j) {
+         if (j > 0 && A[j][i] == A[j-1][i])cnt++;
          else cnt = 1;
          if (cnt == M) {
             found = true;
