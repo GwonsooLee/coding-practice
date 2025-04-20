@@ -2,7 +2,7 @@
 using namespace std;
 
 int N, M;
-int A[6][6];
+int A[21][21];
 
 int func(int x1, int y1, int x2, int y2) {
    int ans = 0;
