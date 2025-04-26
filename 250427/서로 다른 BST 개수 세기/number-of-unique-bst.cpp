@@ -6,7 +6,7 @@ using namespace std;
 long long dp[MAX_N+1];
 
 long long func(int N) {
-   if (N == 0) return 1;
+   if (N <= 1) return 1;
 
    if (dp[N] != -1) return dp[N];
 
