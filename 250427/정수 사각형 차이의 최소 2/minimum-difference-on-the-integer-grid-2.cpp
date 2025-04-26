@@ -16,8 +16,10 @@ int func(int x, int y, int L) {
       return A[x][y];
    }
 
+   if (dp[x][y] != -1) return dp[x][y];
+
    int maxVal = max(func(x+1, y, L), func(x, y+1, L));
-   return min(maxVal, A[x][y]);
+   return dp[x][y] = min(maxVal, A[x][y]);
 }
 
 int main()
@@ -35,6 +37,7 @@ int main()
 
    int ans = 1e9;
    for (int L = 1; L <= 100; ++L) {
+      memset(dp, -1, sizeof(dp));
       int v = func(0, 0, L);
       ans = min(ans, L - v);
    }
