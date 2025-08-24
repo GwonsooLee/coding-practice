@@ -21,27 +21,28 @@ int main()
 
    cin >> N;
    vector<pair<int,int>> edges(N);
+   set<int> nodes;
    for (int i = 0; i < N; ++i) {
       cin >> edges[i].first >> edges[i].second;
+      nodes.insert(edges[i].first);
+      nodes.insert(edges[i].second);
    }
 
-   vector<int> parent(N+1, -1);
+   int totalNodes = nodes.size();
+   vector<int> parent(totalNodes+1, -1);
 
    int u, v;
    for (auto &edge:edges) {
       tie(u, v) = edge;
-      if (find(parent, u) == find(parent, v)) {
-         cout << 0 << "\n";
-         return 0;
+      if (find(parent, u) != find(parent, v)) {
+         unite(parent, u, v);
       }
-
-      unite(parent, u, v);
    }
    int rootCnt = 0;
-   for (int i = 1; i <= N; ++i) {
+   for (int i = 1; i <= totalNodes; ++i) {
       if (parent[i] == -1) rootCnt++;
    }
-   if (rootCnt != 1) {
+   if (rootCnt != 1 || N != totalNodes -1) {
       cout << 0 << "\n";
    } else {
       cout << 1 << "\n";
