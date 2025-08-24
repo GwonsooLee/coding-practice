@@ -6,13 +6,6 @@ vector<int> G[MAX_N+1];
 int deg[MAX_N+1];
 int parent[MAX_N+1];
 
-void markDegree(int node, int degree) {
-   deg[node] = degree;
-   for (auto & x:G[node]) {
-      markDegree(x, degree+1);
-   }
-}
-
 int main()
 {
    ios::sync_with_stdio(false);
@@ -49,11 +42,9 @@ int main()
       i = j+1;
    }
 
-   markDegree(A[0], 0);
-
    int ans = 0;
    for (int i = 0; i < N; ++i) {
-      if (parent[parent[K]] == parent[parent[A[i]]] && parent[A[i]] != parent[K] && deg[A[i]] == deg[K]) {
+      if (parent[parent[K]] == parent[parent[A[i]]] && parent[A[i]] != parent[K]) {
          ans++;
       }
    }
