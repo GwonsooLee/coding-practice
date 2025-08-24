@@ -5,15 +5,17 @@ int N, u, v;
 
 vector<int> G[MAX_N+1];
 
-int dfs(int node, int parent) {
-   if (G[node].size() == 1) return 1;
-   int ans = 0;
+long long tot = 0LL;
+void dfs(int node, int parent, int depth) {
+   if (G[node].size() == 1 && parent != -1) {
+      tot += depth;
+      return;
+   }
    for (auto & x:G[node]) {
       if (x != parent) {
-         ans += dfs(x, node);
+         dfs(x, node, depth + 1);
       }
    }
-   return ans;
 }
 
 int main()
@@ -28,9 +30,9 @@ int main()
       G[v].push_back(u);
    }
 
-   int tot = dfs(1, 0);
+   dfs(1, -1, 0);
 
-   cout << (tot % 2 == 0 ? 0 : 1) << "\n";
+   cout << (tot % 2 != 0) << "\n";
 
    return 0;
 }
