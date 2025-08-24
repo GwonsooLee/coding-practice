@@ -2,51 +2,59 @@
 using namespace std;
 #define MAX_N 10000
 int N; 
+bool vis[MAX_N+1];
+int in[MAX_N+1];
+unordered_map<int,vector<int>> G;
 
-int find(vector<int> & parent,int x) {
-   if (parent[x] == -1) return x;
-   return parent[x] = find(parent, parent[x]);
-}
-
-void unite(vector<int> & parent, int x, int y) {
-   int X = find(parent, x);
-   int Y = find(parent, y);
-   parent[X] = Y;
+void dfs(int node) {
+   vis[node] = true;
+   for (auto &x:G[node]) {
+      dfs(x);
+   }
 }
 
 int main()
 {
    ios::sync_with_stdio(false);
    cin.tie(nullptr);
+   memset(in, 0, sizeof(in));
+   memset(vis, false, sizeof(vis));
 
    cin >> N;
-   vector<pair<int,int>> edges(N);
    set<int> nodes;
    for (int i = 0; i < N; ++i) {
-      cin >> edges[i].first >> edges[i].second;
-      nodes.insert(edges[i].first);
-      nodes.insert(edges[i].second);
+      int u, v;
+      cin >> u >> v;
+      nodes.insert(u);
+      nodes.insert(v);
+      G[u].push_back(v);
+      in[v]++;
    }
 
-   int totalNodes = nodes.size();
-   vector<int> parent(MAX_N+1, -1);
-
-   int u, v;
-   for (auto &edge:edges) {
-      tie(u, v) = edge;
-      if (find(parent, u) != find(parent, v)) {
-         unite(parent, u, v);
+   int root = 0, rootCnt = 0;
+   for (auto & node:nodes) {
+      if (in[node] == 0) {
+         root = node;
+         rootCnt++;
       }
    }
-   int rootCnt = 0;
-   for (int i = 1; i <= MAX_N; ++i) {
-      if (nodes.find(i) != nodes.end() && parent[i] == -1) rootCnt++;
-   }
-   if (rootCnt != 1 || N != totalNodes -1) {
+
+   if (rootCnt > 1 || nodes.size() != N+1) {
       cout << 0 << "\n";
-   } else {
-      cout << 1 << "\n";
+      return 0;
    }
+
+   dfs(root);
+
+   for (auto & node:nodes) {
+      if (vis[node] == false) {
+         cout << 0 << "\n";
+         return 0;
+      }
+   }
+
+   cout << 1 << "\n";
+
    return 0;
 }
 
