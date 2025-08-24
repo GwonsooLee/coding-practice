@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX_N 300000
+#define MAX_N 10000
 int N; 
 
 int find(vector<int> & parent,int x) {
@@ -29,7 +29,7 @@ int main()
    }
 
    int totalNodes = nodes.size();
-   vector<int> parent(totalNodes+1, -1);
+   vector<int> parent(MAX_N+1, -1);
 
    int u, v;
    for (auto &edge:edges) {
@@ -39,8 +39,8 @@ int main()
       }
    }
    int rootCnt = 0;
-   for (int i = 1; i <= totalNodes; ++i) {
-      if (parent[i] == -1) rootCnt++;
+   for (int i = 1; i <= MAX_N; ++i) {
+      if (nodes.find(i) != nodes.end() && parent[i] == -1) rootCnt++;
    }
    if (rootCnt != 1 || N != totalNodes -1) {
       cout << 0 << "\n";
