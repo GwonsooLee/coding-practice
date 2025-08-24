@@ -2,17 +2,24 @@
 using namespace std;
 #define MAX_N 1000000
 int N, K, u, v;
-int childCnt[MAX_N+1], deg[MAX_N+1], parents[MAX_N+1];
-unordered_map<int, int> degCnt;
+vector<int> G[MAX_N+1];
+int deg[MAX_N+1];
+int parent[MAX_N+1];
+
+void markDegree(int node, int degree) {
+   deg[node] = degree;
+   for (auto & x:G[node]) {
+      markDegree(x, degree+1);
+   }
+}
 
 int main()
 {
    ios::sync_with_stdio(false);
    cin.tie(nullptr);
 
-   memset(childCnt, 0, sizeof(childCnt));
-   memset(deg, -1, sizeof(deg));
-   memset(parents, -1, sizeof(parents));
+   memset(deg, 0, sizeof(deg));
+   memset(parent, -1, sizeof(parent));
 
    cin >> N >> K;
    vector<int> A(N);
@@ -20,9 +27,13 @@ int main()
       cin >> A[i];
    }
 
+   if (K == A[0]) {
+      cout << 0 << "\n";
+      return 0;
+   }
+
    queue<int> q;
    q.push(A[0]);
-   deg[A[0]] = 0;
    int i = 1;
    while(i < N) {
       int j = i;
@@ -30,22 +41,22 @@ int main()
       // register i to j to parent;
       int p = q.front();
       q.pop();
-      int d = deg[p]+1;
       for (int k = i; k <= j; ++k) {
          q.push(A[k]);
-         parents[A[k]] = p;
-         deg[A[k]] = d;
-         degCnt[d]++;
+         G[p].push_back(A[k]);
+         parent[A[k]] = p;
       }
       i = j+1;
    }
 
-   int ans = degCnt[deg[K]];
-   int kth_parent = parents[K];
-   for (int i = 0; i < N; ++i) {
-      if (parents[A[i]] == kth_parent) ans--;
-   }
+   markDegree(A[0], 0);
 
+   int ans = 0;
+   for (int i = 0; i < N; ++i) {
+      if (parent[parent[K]] == parent[parent[A[i]]] && parent[A[i]] != parent[K] && deg[A[i]] == deg[K]) {
+         ans++;
+      }
+   }
    cout << ans << "\n";
 
    return 0;
