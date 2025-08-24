@@ -9,7 +9,7 @@ int dfs(int node, int removed) {
 
    if (node == removed) return 0;
 
-   if (G[node].size() == 0) return 1;
+   if (G[node].size() == 0 || G[node].size() == 1 && G[node][0] == removed) return 1;
 
    int ans = 0;
    for (auto & x:G[node]) {
