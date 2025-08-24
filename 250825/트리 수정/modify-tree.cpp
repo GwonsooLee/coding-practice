@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX_N 2000
-int N, u,v,d;
+long long N, u,v,d;
 set<pair<int,int>> G[MAX_N+1];
 
 pair<long long,long long> getFarInfoFromNode(int start) {
@@ -61,10 +61,8 @@ int main()
 
       long long a = getDiameter(u);
       long long b = getDiameter(v);
-      long long aa = getMaxDistFromNode(u);
-      long long bb = getMaxDistFromNode(v);
 
-      ans = max(ans, max(a + bb + d, b + aa + d));
+      ans = max(ans, a + b + d);
 
       G[u].insert({v,d});
       G[v].insert({u,d});
