@@ -7,11 +7,16 @@ int L[MAX_N+1], R[MAX_N+1];
 int search(int node, long long k) {
    if (L[node] == -1 && R[node] == -1) return node;
    long long done = k-1;
-   long long next = done / 2 + 1;
-   if (done % 2 ==0) {
-      return search(L[node], next);
+   if (L[node] != -1 && R[node] != -1) {
+      if (done % 2 ==0) {
+         return search(L[node], done/2+1);
+      }
+      return search(R[node], done/2+1);
    }
-   return search(R[node], next);
+   if (L[node] == -1) {
+      return search(R[node], k);
+   }
+   return search(L[node],k);
 }
 
 int main()
