@@ -44,7 +44,8 @@ int main()
       }
 
       now = target;
-      bool found = false;
+      bool found = vis[target];
+      if (found) curr = target;
       while(now / 2 >= lca) {
          now /= 2;
          if (vis[now]) {
