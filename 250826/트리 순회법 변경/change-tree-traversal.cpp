@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX_N 10000
+#define MAX_N 1000000
 int preorder[MAX_N];
 int N;
 int L[MAX_N+1], R[MAX_N];
