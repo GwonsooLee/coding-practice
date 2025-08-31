@@ -5,21 +5,16 @@ int N,R,u,v;
 vector<int> G[MAX_N+1];
 int dp[MAX_N+1];
 int C[MAX_N+1];
-int ans = -1;
+int ans = 0;
 
-void dfs(int node, int parent) {
+void dfs(int node, int parent, int v) {
    dp[node] = 1;
    for (auto & x:G[node]) {
       if (x == parent) continue;
-      dfs(x, node);
+      dfs(x, node, v+1);
       dp[node] += dp[x];
       C[node] += 1;
    }
-}
-
-void find(int node, int parent) {
-   if (ans != -1) return;
-
    if (C[node] >= 2) {
       int maxVal = 0, minVal = 1e9;
       for (auto & x:G[node]) {
@@ -27,14 +22,12 @@ void find(int node, int parent) {
          maxVal = max(maxVal, dp[x]);
          minVal = min(minVal, dp[x]);
       }
-
-      ans = maxVal - minVal;
-   } else {
-      for (auto & x:G[node]) {
-         if (x != parent) {
-            find(x, node);
-         }
+      
+      if (v > 0) {
+         maxVal = max(maxVal, v);
+         minVal = min(minVal, v);
       }
+      ans = maxVal - minVal;
    }
 }
 
@@ -51,10 +44,7 @@ int main()
       G[v].push_back(u);
    }
 
-   dfs(R, -1);
-   find(R, -1);
-
-   if (ans == -1) ans = 0;
+   dfs(R, -1, 0);
    cout << ans << "\n";
 
    return 0;
