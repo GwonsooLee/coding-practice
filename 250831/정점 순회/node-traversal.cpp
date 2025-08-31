@@ -15,26 +15,6 @@ void countMaxDepth(int node, int parent) {
    }
 }
 
-pair<bool,int> dfs(int node, int parent) {
-   if (depth[node] == D) return {true, 0};
-
-   int target_nodes = 0;
-   int tot_dis = 0;
-   for (auto & x:G[node]) {
-      if (x == parent) continue;
-      auto p = dfs(x, node);
-      target_nodes += p.first;
-      tot_dis += p.second;
-   }
-
-   tot_dis += target_nodes * 2;
-   if (tot_dis > 0) {
-      return {true, tot_dis};
-   }
-   return {false, 0};
-}
-
-
 int main()
 {
    ios::sync_with_stdio(false);
@@ -50,9 +30,13 @@ int main()
    }
 
    countMaxDepth(S, -1);
-   auto ans = dfs(S, -1);
+   int ans = 0;
+   for (int i = 1; i <= N; ++i) {
+      if (i == S) continue;
+      if (depth[i] >= D) ans++;
+   }
 
-   cout << ans.second << "\n";
+   cout << ans *2 << "\n";
 
    return 0;
 }
