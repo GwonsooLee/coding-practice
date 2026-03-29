@@ -1,9 +1,10 @@
+import sys
+
 n = int(input())
 values = list(map(int, input().split()))
 edges = [tuple(map(int, input().split())) for _ in range(n - 1)]
-import sys
  
-sys.setrecursionlimit(3000) 
+sys.setrecursionlimit(100000) 
 # Please write your code here.
 graph = dict()
 for (u, v) in edges:
